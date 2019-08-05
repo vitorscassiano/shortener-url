@@ -15,5 +15,8 @@
   "jest": {
     "verbose": true,
     "collectCoverage": true
+  },
+  "dependencies": {
+    "pg": "^7.12.0"
   }
 }

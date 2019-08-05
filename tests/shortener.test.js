@@ -1,10 +1,9 @@
-const Shortener = require("../services/shortener")
+const { Shortener } = require("../services")
 
 describe('ShortURL Unit Tests', () => {
   it('should hash url', done => {
-    const map = {}
-    const shortner = new Shortener(map)
-    const tinyHash = shortner.createHash('12345', 'www.google.com', 'Cassiano')
+    const storage = {}
+    const tinyHash = Shortener.createHash(storage, '12345', 'www.google.com', 'Cassiano')
 
     expect(tinyHash).toEqual({
       "hashDigest": "d2dcf8f5",
@@ -15,15 +14,14 @@ describe('ShortURL Unit Tests', () => {
   })
 
   it('should delete hash url', done => {
-    const map = { "d2dcf8f5": {
+    const storage = { "d2dcf8f5": {
       "hashDigest": "d2dcf8f5",
       "originalUrl": "www.google.com",
       "userName": "Cassiano"
     }}
 
-    const shortener = new Shortener(map)
-    shortener.deleteHashByHash("d2dcf8f5")
-    expect(map).toEqual({})
+    Shortener.deleteHashByHash(storage, null, "d2dcf8f5")
+    expect(storage).toEqual({})
 
     done()
   })

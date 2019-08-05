@@ -2,26 +2,20 @@ const crypto = require('crypto')
 const hash = crypto.createHash('sha256')
 
 class Shortener {
-  constructor(storage) {
-    this.storage = storage
-  }
-
-  createHash(apiDevKey, originalUrl, userName) {
+  static createHash(storage, apiDevKey, originalUrl, userName) {
     const hashDigest = hash.update(originalUrl).digest('hex').slice(-8)
     const properties = { originalUrl, userName, hashDigest }
 
-    this.storage[hashDigest] = properties
+    storage[hashDigest] = properties
 
-    return properties 
+    return properties
   }
 
-  deleteHashByHash(apiDevKey, hash) {
-    delete this.storage[hash]
+  static deleteHashByHash(storage, apiDevKey, hash) {
+    delete storage[hash]
   }
 
-  deleteHashByURL(apiDevKey, shortUrl) {
-
-  }
+  static deleteHashByURL(storage, apiDevKey, shortUrl) { }
 }
 
 module.exports = Shortener
