@@ -1,7 +1,15 @@
-const { Shortener } = require("./services")
-const { buildStorage } = require("./models")
+const express = require('express')
+const loaders = require('./loaders')
 
-const storage = buildStorage()
-const hash = Shortener.createHash(storage, null, 'https://google.com', 'Vitor Cassiano')
+const { tiny } = require('./api/index')
 
-console.log(hash)
+const startServer = async() => {
+  const app = express()
+  await loaders.init(app)
+
+  app.use(tiny)
+
+  app.listen(8080, console.log('The server was up!'))
+}
+
+startServer()

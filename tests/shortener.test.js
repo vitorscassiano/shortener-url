@@ -2,25 +2,31 @@ const { Shortener } = require("../services")
 
 describe('ShortURL Unit Tests', () => {
   it('should hash url', done => {
-    const storage = {}
-    const tinyHash = Shortener.createHash(storage, '12345', 'www.google.com', 'Cassiano')
+    const storage = {
+      save: async ({ hashDigest, originalURL, accountId }) => {
+        return Promise.resolve({
+          originalUrl: 'www.google.com',
+          accountId: 123,
+          hashDigest: '47a0938d'
+        })
+      }
+    }
+    const tinyHash = Shortener.createHash(storage, '12345', 'www.google.com', 123)
 
     expect(tinyHash).toEqual({
       "hashDigest": "d2dcf8f5",
       "originalUrl": "www.google.com",
-      "userName": "Cassiano"
+      "accountId": 123
     })
     done()
   })
 
-  it('should delete hash url', done => {
-    const storage = { "d2dcf8f5": {
-      "hashDigest": "d2dcf8f5",
-      "originalUrl": "www.google.com",
-      "userName": "Cassiano"
-    }}
+  xit('should delete hash url', async done => {
+    const storage = {
+      delete: async (hash) => Promise.resolve()
+    }
 
-    Shortener.deleteHashByHash(storage, null, "d2dcf8f5")
+    await Shortener.deleteByHash(storage, null, "d2dcf8f5")
     expect(storage).toEqual({})
 
     done()
