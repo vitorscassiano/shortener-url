@@ -1,6 +1,6 @@
 const EventEmitter = require("events");
 
-class Hello extends EventEmitter {
+module.exports = class Hello extends EventEmitter {
   registerA() {
     this.on('A', () => console.log('Foi no A'))
   }
@@ -10,13 +10,7 @@ class Hello extends EventEmitter {
   }
 
   send(key) {
+    console.log()
     this.emit(key)
   }
 }
-
-const hello = new Hello()
-hello.registerA()
-hello.registerB()
-
-hello.send('A')
-hello.send('B')

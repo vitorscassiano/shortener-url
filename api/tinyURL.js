@@ -15,7 +15,7 @@ router.post('/generate', async (request, response, next) => {
   return response.json(hash)
 })
 
-router.get('/all', async(request, response, next) => {
+router.get('/all', async (request, response, next) => {
   const storage = buildStorage()
   const all = await Shortener.findAll(storage, null)
 

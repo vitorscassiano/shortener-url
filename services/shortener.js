@@ -2,7 +2,7 @@ const crypto = require('crypto')
 const hash = crypto.createHash('sha256')
 
 class Shortener {
-  static async createHash(storage, apiDevKey, originalUrl, accountId) {
+  static async createHash(storage, apiDevKey, originalUrl, accountId, emitter) {
     console.info({ originalUrl, accountId })
     const hashDigest = hash.update(originalUrl).digest('hex').slice(-8)
     const properties = {
